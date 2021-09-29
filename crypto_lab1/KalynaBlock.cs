@@ -166,6 +166,7 @@ namespace crypto_lab1
             string res = "{";
             foreach (byte t in Data)
                 res += t.ToString() + ", ";
+            res = res.Remove(res.Length-2, 2);
             res += "}";
             return res;
         }

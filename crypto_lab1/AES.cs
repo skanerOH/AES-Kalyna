@@ -4,7 +4,7 @@ using System.Text;
 
 namespace crypto_lab1
 {
-    class AES
+    public class AES
     {
         private const int ROUND_NO = 10;
         private readonly byte[] roundCoefficient = new byte[ROUND_NO] {

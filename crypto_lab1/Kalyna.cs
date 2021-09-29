@@ -5,7 +5,7 @@ using System.Text;
 
 namespace crypto_lab1
 {
-    class Kalyna
+    public class Kalyna
     {
         private KalynaBlock Key { get; }
         private List<KalynaBlock> RoundsKeys { get; } = new List<KalynaBlock>();
@@ -28,7 +28,7 @@ namespace crypto_lab1
 
             kt.AddRoundKey(Key);
 
-            kt.SubBytes(StaticTables.Π);
+            kt.SubBytes(StaticTables.kalynaForwardSBoxes);
 
             kt.ShiftRows();
 
@@ -36,7 +36,7 @@ namespace crypto_lab1
 
             kt.Xor(Key);
 
-            kt.SubBytes(StaticTables.Π);
+            kt.SubBytes(StaticTables.kalynaForwardSBoxes);
 
             kt.ShiftRows();
 
@@ -44,7 +44,7 @@ namespace crypto_lab1
 
             kt.AddRoundKey(Key);
 
-            kt.SubBytes(StaticTables.Π);
+            kt.SubBytes(StaticTables.kalynaForwardSBoxes);
 
             kt.ShiftRows();
 
@@ -74,7 +74,7 @@ namespace crypto_lab1
 
                 roundKey.AddRoundKey(keyCopy);
 
-                roundKey.SubBytes(StaticTables.Π);
+                roundKey.SubBytes(StaticTables.kalynaForwardSBoxes);
 
                 roundKey.ShiftRows();
 
@@ -82,7 +82,7 @@ namespace crypto_lab1
 
                 roundKey.Xor(copy);
 
-                roundKey.SubBytes(StaticTables.Π);
+                roundKey.SubBytes(StaticTables.kalynaForwardSBoxes);
 
                 roundKey.ShiftRows();
 
@@ -108,7 +108,7 @@ namespace crypto_lab1
             for (var i = 1; i <= 9; i++)
             {
 
-                cipherText.SubBytes(StaticTables.Π);
+                cipherText.SubBytes(StaticTables.kalynaForwardSBoxes);
 
                 cipherText.ShiftRows();
 
@@ -117,7 +117,7 @@ namespace crypto_lab1
                 cipherText.Xor(RoundsKeys[i]);
             }
 
-            cipherText.SubBytes(StaticTables.Π);
+            cipherText.SubBytes(StaticTables.kalynaForwardSBoxes);
 
             cipherText.ShiftRows();
 
@@ -138,7 +138,7 @@ namespace crypto_lab1
 
             plainText.ShiftRowsRev();
 
-            plainText.SubBytes(StaticTables.ΠRev);
+            plainText.SubBytes(StaticTables.kalynaInverseSBoxes);
 
             for (var i = 9; 1 <= i; --i)
             {
@@ -148,7 +148,7 @@ namespace crypto_lab1
 
                 plainText.ShiftRowsRev();
 
-                plainText.SubBytes(StaticTables.ΠRev);
+                plainText.SubBytes(StaticTables.kalynaInverseSBoxes);
             }
 
             plainText.SubRoundKey(RoundsKeys[0]);

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace crypto_lab1
 {
-    class AESBlock
+    public class AESBlock
     {
         public static int BLOCK_SIZE = 128/8;
         public const byte BYTE_POLY_REDUCTION = 0x1b;
@@ -178,7 +178,7 @@ namespace crypto_lab1
         {
             string res = "{";
             for (int i = 0; i < BLOCK_SIZE; ++i)
-                res += data[i].ToString() + ", ";
+                res += data[i].ToString() + (i!=BLOCK_SIZE-1 ? ", " : "");
             res += "}";
             return res;
         }

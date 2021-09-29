@@ -55,7 +55,7 @@ namespace crypto_lab1
             0, 1, 0, 1, 0, 1, 0, 1
         };
 
-        public static readonly byte[][][] Π =
+        public static readonly byte[][][] kalynaForwardSBoxes =
         {
             new [] {
                 new byte[] { 0xA8, 0x43, 0x5F, 0x06, 0x6B, 0x75, 0x6C, 0x59, 0x71, 0xDF, 0x87, 0x95, 0x17, 0xF0, 0xD8, 0x09 },
@@ -131,7 +131,7 @@ namespace crypto_lab1
             }
         };
 
-        public static readonly byte[][][] ΠRev =
+        public static readonly byte[][][] kalynaInverseSBoxes =
         {
             new[]
             {
