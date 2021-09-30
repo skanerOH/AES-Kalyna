@@ -1,11 +1,12 @@
-﻿using System;
+﻿using crypto_lab1.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
 namespace crypto_lab1
 {
-    public class Kalyna
+    public class Kalyna : IChipherer
     {
         private KalynaBlock Key { get; }
         private List<KalynaBlock> RoundsKeys { get; } = new List<KalynaBlock>();
@@ -18,13 +19,7 @@ namespace crypto_lab1
 
         private KalynaBlock GenerateKt()
         {
-            var kt = new KalynaBlock
-            {
-                Data = new List<byte>
-                {
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5
-                }
-            };
+            var kt = new KalynaBlock();
 
             kt.AddRoundKey(Key);
 
@@ -153,6 +148,22 @@ namespace crypto_lab1
 
             plainText.SubRoundKey(RoundsKeys[0]);
             return plainText;
+        }
+
+        public byte[] Encrypt(byte[] plaintext)
+        {
+            KalynaBlock plainBlock = new KalynaBlock(plaintext);
+            KalynaBlock chipherBlock = Encrypt(plainBlock);
+
+            return chipherBlock.Data.ToArray();
+        }
+
+        public byte[] Decrypt(byte[] chiphertext)
+        {
+            KalynaBlock chipherBlock = new KalynaBlock(chiphertext);
+            KalynaBlock plainBlock = Decrypt(chipherBlock);
+
+            return plainBlock.Data.ToArray();
         }
     }
 }

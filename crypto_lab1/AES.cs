@@ -1,10 +1,11 @@
-﻿using System;
+﻿using crypto_lab1.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace crypto_lab1
 {
-    public class AES
+    public class AES : IChipherer
     {
         private const int ROUND_NO = 10;
         private readonly byte[] roundCoefficient = new byte[ROUND_NO] {
@@ -73,6 +74,22 @@ namespace crypto_lab1
             outputBlock.AddRoundKey(roundKeys[0]);
 
             return outputBlock;
+        }
+
+        public byte[] Encrypt(byte[] plaintext)
+        {
+            AESBlock plainBlock = new AESBlock(plaintext);
+            AESBlock chipherBlock = Encrypt(plainBlock);
+
+            return chipherBlock.data;
+        }
+
+        public byte[] Decrypt(byte[] chiphertext)
+        {
+            AESBlock chipherBlock = new AESBlock(chiphertext);
+            AESBlock plainBlock = Decrypt(chipherBlock);
+
+            return plainBlock.data;
         }
     }
 }

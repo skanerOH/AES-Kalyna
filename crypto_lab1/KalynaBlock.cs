@@ -12,7 +12,10 @@ namespace crypto_lab1
 
         public List<byte> Data { get; set; } = new List<byte>();
 
-        public KalynaBlock() { }
+        public KalynaBlock() 
+        {
+            Data = new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        }
 
         public KalynaBlock(byte[] data)
         {

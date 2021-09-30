@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace crypto_lab1
 {
@@ -31,7 +32,53 @@ namespace crypto_lab1
             KalynaBlock output2 = kalyna.Decrypt(chipheredBlock2);
             Console.WriteLine("\tDecripted vlock: " + output2.ToString());
 
-            Console.Read();
+
+            string rootpath = "C:\\Users\\Skaner\\Downloads\\";
+            string inpFileName = "lect10-earley (2).ppt";
+
+            //AES
+            {
+                Console.WriteLine("AES:");
+                FileChipherer chipherer = new FileChipherer(ChiphererAlgo.AES, new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
+
+                Stopwatch stopwatch = new Stopwatch();
+
+                stopwatch.Start();
+                chipherer.Encrypt(rootpath + inpFileName, rootpath + "Encr_" + inpFileName);
+                stopwatch.Stop();
+
+                Console.WriteLine($"\tSpent {stopwatch.ElapsedMilliseconds} ms to encrypt");
+                stopwatch.Reset();
+
+                stopwatch.Start();
+                chipherer.Decrypt(rootpath + "Encr_" + inpFileName, rootpath + "Decr_" + inpFileName);
+                stopwatch.Stop();
+
+                Console.WriteLine($"\tSpent {stopwatch.ElapsedMilliseconds} ms to decrypt");
+            }
+
+            //Kalyna
+            {
+                Console.WriteLine("Kalyna:");
+                FileChipherer chipherer = new FileChipherer(ChiphererAlgo.Kalyna, new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
+
+                Stopwatch stopwatch = new Stopwatch();
+
+                stopwatch.Start();
+                chipherer.Encrypt(rootpath + inpFileName, rootpath + "Encr_" + inpFileName);
+                stopwatch.Stop();
+
+                Console.WriteLine($"\tSpent {stopwatch.ElapsedMilliseconds} ms to encrypt");
+                stopwatch.Reset();
+
+                stopwatch.Start();
+                chipherer.Decrypt(rootpath + "Encr_" + inpFileName, rootpath + "Decr_" + inpFileName);
+                stopwatch.Stop();
+
+                Console.WriteLine($"\tSpent {stopwatch.ElapsedMilliseconds} ms to decrypt");
+            }
+
+            Console.ReadKey();
         }
     }
 }
