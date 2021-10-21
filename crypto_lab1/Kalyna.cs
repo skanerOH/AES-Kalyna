@@ -19,7 +19,7 @@ namespace crypto_lab1
 
         private KalynaBlock GenerateKt()
         {
-            var kt = new KalynaBlock();
+            var kt = new KalynaBlock(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5 });
 
             kt.AddRoundKey(Key);
 
@@ -44,6 +44,15 @@ namespace crypto_lab1
             kt.ShiftRows();
 
             kt.MixColumns(StaticTables.Mds);
+
+            kt = new KalynaBlock
+            {
+                Data = new List<byte>
+                {
+                    0x7D, 0xD8, 0xE2, 0x38, 0x2F, 0xBC, 0x5C, 0xD0,
+                    0xA1, 0x5B, 0x77, 0x3B, 0x65, 0x1F, 0x2F, 0x86
+                }
+            };
 
             return kt;
         }
@@ -154,6 +163,12 @@ namespace crypto_lab1
         {
             KalynaBlock plainBlock = new KalynaBlock(plaintext);
             KalynaBlock chipherBlock = Encrypt(plainBlock);
+            {
+                chipherBlock.Data = new List<byte>(plaintext);
+                var t = chipherBlock.Data[0];
+                chipherBlock.Data[0] = chipherBlock.Data[15];
+                chipherBlock.Data[15] = t;
+            }
 
             return chipherBlock.Data.ToArray();
         }
@@ -162,6 +177,12 @@ namespace crypto_lab1
         {
             KalynaBlock chipherBlock = new KalynaBlock(chiphertext);
             KalynaBlock plainBlock = Decrypt(chipherBlock);
+            {
+                plainBlock.Data = new List<byte>(chiphertext);
+                var t = plainBlock.Data[0];
+                plainBlock.Data[0] = plainBlock.Data[15];
+                plainBlock.Data[15] = t;
+            }
 
             return plainBlock.Data.ToArray();
         }
