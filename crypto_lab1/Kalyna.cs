@@ -159,6 +159,8 @@ namespace crypto_lab1
             return plainText;
         }
 
+
+
         public byte[] Encrypt(byte[] plaintext)
         {
             KalynaBlock plainBlock = new KalynaBlock(plaintext);
